@@ -1,87 +1,96 @@
-# Douyin Downloader (Hybrid Edition)
+# 🎵 Douyin Downloader (Hybrid Edition)
 
-Define your own way to download Douyin (TikTok China) videos. This project provides a high-performance **Downloader Core** (`main.py`) paired with two distinct operation modes.
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/wanjia9527/douyin_downloader?style=for-the-badge)](https://github.com/wanjia9527/douyin_downloader/stargazers)
 
-## 🚀 Core Features
-- **High Performance**: 16-32 concurrent threads with connection pooling.
-- **Smart Pathing**: Videos are automatically organized into sub-folders (by Author or Source).
-- **Deduping**: In-memory deduplication to prevent re-downloading videos in the same session.
+> **A powerful, dual-mode solution for downloading high-quality videos from Douyin (TikTok China).**  
+> Whether you want to browse and pick videos manually, or scrape a creator's entire profile automatically, this tool has you covered.
 
 ---
 
-## 🛠️ Preparation (Required for both modes)
+## ✨ Features
 
-1. **Install Dependencies**:
+- **🚀 High Performance**: Built with `requests` connection pooling and multi-threaded downloading (16-32 threads).
+- **🛡️ Smart & Safe**: Automatically handles cookies via `cookies.txt` (Netscape format) to bypass login restrictions safely.
+- **📂 Auto-Organization**: 
+  - Feed videos -> `Save_Dir/Douyin_Feed/`
+  - Profile videos -> `Save_Dir/Author_Name/`
+- **🎮 Dual Modes**: 
+  - **Browser Assistant**: Use a UserScript button while browsing.
+  - **Auto Spider**: Fully automated headless scraper using Playwright.
+
+---
+
+## 📈 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=wanjia9527/douyin_downloader&type=Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)
+
+---
+
+## 🛠️ Quick Start
+
+### 1. Installation
+
+Clone the repo and install dependencies:
+```bash
+git clone https://github.com/wanjia9527/douyin_downloader.git
+cd douyin_downloader
+pip install -r requirements.txt
+playwright install chromium
+```
+
+### 2. Configuration
+
+Open `main.py` and set your preferred storage path:
+```python
+SAVE_DIR = r"F:\Douyin_Videos"  # <--- Change this to your path
+```
+
+### 3. Run the Core Server
+**Always keep this running!** It acts as the download manager.
+```bash
+python main.py
+```
+
+---
+
+## 📖 Usage Guide
+
+### Mode A: Browser Assistant (Manual)
+*Best for: Casual browsing and selective downloading.*
+
+1. Install [Tampermonkey](https://www.tampermonkey.net/) extension.
+2. Create a new script and copy the content from [`douyin_helper.user.js`](douyin_helper.user.js).
+3. Open Douyin.com, scroll, and watch the server console automatically catch videos!
+
+### Mode B: Auto Spider (Fully Automated)
+*Best for: Archiving profiles or bulk downloading feeds.*
+
+1. **Cookie Setup** (Crucial):
+   - Install **EditThisCookie** extension.
+   - Login to Douyin -> Export Cookies -> Paste into `cookies.txt`.
+2. **Run Spider**:
    ```bash
-   pip install -r requirements.txt
-   playwright install chromium
-   ```
+   # Download Recommendation Feed
+   python spider.py
 
-2. **Configure Storage**:
-   Open `main.py` and set your preferred storage path:
-   ```python
-   SAVE_DIR = r"F:\Douyin_Videos"  # Change this to your path
+   # Download Specific User
+   python spider.py "https://www.douyin.com/user/MS4wLjABAAAA..."
    ```
-
-3. **Start the Core Server**:
-   You must keep this running for either mode to work.
-   ```bash
-   python main.py
-   ```
-   *Server listens on `http://127.0.0.1:5000`*
 
 ---
 
-## 🎮 Mode A: Browser Assistant (Manual / Interactive)
-*Best for: Browsing normally and downloading interesting videos as you see them.*
+## 🤝 Contribution
 
-1. **Install UserScript**:
-   - Install the [Tampermonkey](https://www.tampermonkey.net/) extension for Chrome/Edge.
-   - Create a new script, copy content from `douyin_helper.user.js` and save.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-2. **How to Use**:
-   - Open [Douyin.com](https://www.douyin.com/) in your browser.
-   - You will see a helper panel on the right.
-   - **Just Browse**: As you scroll, the script automatically sniff video links and sends them to `main.py`.
-   - **Auto-Scroll**: Click the "Start Auto-Scroll" button on the panel to let it scroll for you.
-   - Videos will save to: `SAVE_DIR/Default_Downloads/`
-
----
-
-## 🕷️ Mode B: Auto Spider (Fully Automated)
-*Best for: Batch downloading a specific user's profile or building a local archive of the feed without opening a browser window.*
-
-1. **Setup Cookies** (One-time setup):
-   - Install **EditThisCookie** extension in your browser.
-   - Login to Douyin.
-   - Click extension icon -> **Export** (Arrow icon).
-   - Paste the content into a file named `cookies.txt` in the project folder.
-
-2. **How to Use**:
-   - Keep `python main.py` running.
-   - Open a **new terminal** and run:
-     ```bash
-     # To download Main Feed (Recommendations):
-     python spider.py
-     
-     # To download a Specific User (Profile):
-     python spider.py "https://www.douyin.com/user/USER_ID_URL"
-     ```
-
-3. **Behavior**:
-   - An automated browser will open (using your cookies).
-   - It will scroll automatically.
-   - **Feed videos** save to: `SAVE_DIR/Douyin_Feed/`
-   - **Profile videos** save to: `SAVE_DIR/Author_Name/`
-
----
-
-## 📂 Project Structure
-- `main.py`: **[Core]** The downloader server. Always run this first.
-- `spider.py`: **[Mode B]** Automated Playwright spider.
-- `douyin_helper.user.js`: **[Mode A]** Browser UserScript.
-- `cookies.txt`: **[Mode B]** Auth file for the spider.
-- `requirements.txt`: Python dependencies.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📝 License
-MIT
+
+Distributed under the MIT License. See `LICENSE` for more information.

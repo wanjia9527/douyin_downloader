@@ -3,3 +3,4 @@ flask-cors
 requests
 playwright
 browser_cookie3
+pyyaml

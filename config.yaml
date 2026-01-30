@@ -1,0 +1,48 @@
+# ================================================
+#          抖音下载器 - 配置文件
+# ================================================
+
+# ---------- 下载设置 ----------
+save_dir: 'H:\douyin'             # 视频保存目录
+port: 5000                         # 本地服务端口
+max_downloads: 100                   # 最大下载数量，0 表示不限制
+max_queue_size: 0                   # 最大等待队列长度，0 表示不限制。队列满时新任务将被丢弃
+
+# ---------- 并发设置 ----------
+max_workers: 16                    # 同时下载的视频数量
+min_segment_size_mb: 4             # 最小分片大小（MB）
+max_retries: 1                     # 每个视频/分片最大重试次数
+
+# ---------- 动态分片策略 ----------
+# 根据文件大小(MB)自动决定分片数量
+segment_rules:
+  - max_size_mb: 8                 # < 5MB:  不分片
+    segments: 1
+  - max_size_mb: 30                # 5-20MB:  2 分片
+    segments: 2
+  - max_size_mb: 80                # 20-80MB: 4 分片
+    segments: 4
+  - max_size_mb: 200               # 80-200MB: 8 分片
+    segments: 6
+  - max_size_mb: 999999            # > 200MB: 16 分片
+    segments: 8
+
+# ---------- 爬虫设置 ----------
+scroll_interval: 2                # 滚动间隔（秒），越小越快，越大越安全
+max_video_duration: 1800            # 最大视频时长（秒），超过自动跳过。设为 0 表示不限制
+browser_headless: false             # 是否隐藏浏览器窗口（true=后台运行，false=显示窗口）
+target_url: "https://www.douyin.com/?recommend=1"  # 默认爬取页面
+
+# ---------- 标题过滤 ----------
+# 黑名单：标题包含任一关键词则跳过（优先级高于白名单）
+title_blacklist:
+  
+
+
+# 白名单：非空时，标题必须包含至少一个关键词才会下载（留空表示不限制）
+title_whitelist:
+  # - "游戏"
+  # - "搞笑"
+
+# ---------- 请求头 ----------
+user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

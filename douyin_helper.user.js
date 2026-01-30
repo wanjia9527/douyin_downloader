@@ -52,11 +52,48 @@
         if (!list.length) return;
 
         const videos = list.map(item => {
-            const urls = item.video?.play_addr?.url_list || [];
+            const video = item.video || {};
+            let bestUrl = null;
+
+            const bitRateList = video.bit_rate || [];
+            const hevcCodecs = new Set(['bytevc1', 'hevc', 'h265', 'bytevc2', 'vvc', 'h266']);
+
+            if (bitRateList.length) {
+                // 按码率从高到低排序
+                const sorted = [...bitRateList].sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0));
+
+                // 优先选择 H.264 编码的最高码率
+                for (const rate of sorted) {
+                    const codec = String(rate.codec_type || '').toLowerCase();
+                    const gear = rate.gear_name || '';
+                    const isHevc = hevcCodecs.has(codec) || gear.includes('265') || gear.toLowerCase().includes('hevc');
+
+                    if (!isHevc) {
+                        const urls = rate.play_addr?.url_list || [];
+                        if (urls.length) {
+                            bestUrl = urls[urls.length - 1];
+                            break;
+                        }
+                    }
+                }
+
+                // H.264 没找到，尝试 play_addr_h264
+                if (!bestUrl) {
+                    const h264Urls = video.play_addr_h264?.url_list || [];
+                    if (h264Urls.length) bestUrl = h264Urls[h264Urls.length - 1];
+                }
+            }
+
+            // 最终回退到默认 play_addr
+            if (!bestUrl) {
+                const urls = video.play_addr?.url_list || [];
+                if (urls.length) bestUrl = urls[urls.length - 1];
+            }
+
             return {
                 id: item.aweme_id,
                 title: item.desc || "untitled",
-                url: urls[urls.length - 1]
+                url: bestUrl
             };
         }).filter(v => v.url);
 

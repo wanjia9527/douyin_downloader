@@ -83,6 +83,10 @@ python main.py
    python spider.py "https://www.douyin.com/user/MS4wLjABAAAA..."
    ```
 
+> **💡 小贴士**：
+> 1. 打开 `spider.py` 修改顶部 `SCROLL_INTERVAL = 2` 可调整翻页速度（秒）。
+> 2. 默认 URL 已强制锁定为推荐流 (`/?recommend=1`)，防止跳偏。
+
 ---
 
 ## 🤝 参与贡献

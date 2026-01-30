@@ -81,6 +81,10 @@ python main.py
    python spider.py "https://www.douyin.com/user/MS4wLjABAAAA..."
    ```
 
+> **💡 Tip**: 
+> 1. Edit `SCROLL_INTERVAL = 2` in `spider.py` to adjust scrolling speed.
+> 2. Default URL is now locked to Recommendation Feed (`/?recommend=1`).
+
 ---
 
 ## 🤝 Contribution

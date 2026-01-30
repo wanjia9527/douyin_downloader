@@ -7,6 +7,7 @@ from playwright.sync_api import sync_playwright
 
 # Configuration
 SERVER_URL = "http://127.0.0.1:5000/push_videos"
+SCROLL_INTERVAL = 2  # Seconds to wait between scrolls (Lower = faster, Higher = safer)
 
 def get_cookies():
     """Load cookies explicitly from cookies.txt (Netscape or JSON format)."""
@@ -198,7 +199,7 @@ def run_spider(target_url):
                     # Method 2: Pressing Arrow Down explicitly
                     page.keyboard.press("ArrowDown")
                     
-                    time.sleep(2)  # Wait for content load
+                    time.sleep(SCROLL_INTERVAL)  # Wait for content load
                     print(".", end="", flush=True)
                 except Exception:
                     break
@@ -215,8 +216,8 @@ if __name__ == "__main__":
     
     # If no URL provided, default to Homepage (Feed)
     if len(sys.argv) < 2:
-        url = "https://www.douyin.com/"
-        print("[*] No URL provided. Defaulting to Main Feed.")
+        url = "https://www.douyin.com/?recommend=1"
+        print("[*] No URL provided. Defaulting to Main Feed (Recommend Mode).")
     else:
         url = sys.argv[1]
     

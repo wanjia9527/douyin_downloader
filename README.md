@@ -1,38 +1,40 @@
-# 🎵 Douyin Downloader (Hybrid Edition)
+# 🎵 抖音批量下载器 (Douyin Downloader)
+
+[English Version](README_EN.md) | [中文说明](README.md)
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/wanjia9527/douyin_downloader?style=for-the-badge)](https://github.com/wanjia9527/douyin_downloader/stargazers)
 
-> **A powerful, dual-mode solution for downloading high-quality videos from Douyin (TikTok China).**  
-> Whether you want to browse and pick videos manually, or scrape a creator's entire profile automatically, this tool has you covered.
+> **一款高效、双模式的抖音视频高清下载工具。**  
+> 无论你是想边刷边下（手动模式），还是想批量归档某个博主的所有作品（自动模式），本项目都能满足你的需求。
 
 ---
 
-## ✨ Features
+## ✨ 核心亮点
 
-- **🚀 High Performance**: Built with `requests` connection pooling and multi-threaded downloading (16-32 threads).
-- **🛡️ Smart & Safe**: Automatically handles cookies via `cookies.txt` (Netscape format) to bypass login restrictions safely.
-- **📂 Auto-Organization**: 
-  - Feed videos -> `Save_Dir/Douyin_Feed/`
-  - Profile videos -> `Save_Dir/Author_Name/`
-- **🎮 Dual Modes**: 
-  - **Browser Assistant**: Use a UserScript button while browsing.
-  - **Auto Spider**: Fully automated headless scraper using Playwright.
+- **🚀 极速下载**：基于 `requests` 连接池和多线程技术（支持 16-32 线程并发），下载速度飞快。
+- **🛡️ 智能过检测**：支持加载本地 Cookie (`cookies.txt`，兼容 Netscape 格式)，轻松绕过登录限制。
+- **📂 自动归档**：
+  - 推荐流视频 -> 存入 `保存目录/Douyin_Feed/`
+  - 个人主页视频 -> 存入 `保存目录/作者昵称/`
+- **🎮 双重模式**：
+  - **浏览器辅助模式**：配合油猴脚本，浏览时一键自动捕获。
+  - **全自动爬虫模式**：全自动后台运行，自动翻页抓取。
 
 ---
 
-## 📈 Star History
+## 📈 Star 趋势
 
 [![Star History Chart](https://api.star-history.com/svg?repos=wanjia9527/douyin_downloader&type=Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)
 
 ---
 
-## 🛠️ Quick Start
+## 🛠️ 快速开始
 
-### 1. Installation
+### 1. 安装项目
 
-Clone the repo and install dependencies:
+克隆仓库并安装依赖：
 ```bash
 git clone https://github.com/wanjia9527/douyin_downloader.git
 cd douyin_downloader
@@ -40,57 +42,59 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 2. Configuration
+### 2. 配置保存路径
 
-Open `main.py` and set your preferred storage path:
+打开 `main.py` 文件，找到并修改以下变量（设为你喜欢的盘符）：
 ```python
-SAVE_DIR = r"F:\Douyin_Videos"  # <--- Change this to your path
+SAVE_DIR = r"F:\Douyin_Videos"  # <--- 修改这里
 ```
 
-### 3. Run the Core Server
-**Always keep this running!** It acts as the download manager.
+### 3. 启动核心服务
+**注意：无论使用哪种模式，都必须先运行此服务！**
 ```bash
 python main.py
 ```
 
 ---
 
-## 📖 Usage Guide
+## 📖 使用指南
 
-### Mode A: Browser Assistant (Manual)
-*Best for: Casual browsing and selective downloading.*
+### 模式 A：浏览器辅助（手动/半自动）
+*适用场景：日常刷抖音，看到喜欢的视频或只想下载部分视频。*
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) extension.
-2. Create a new script and copy the content from [`douyin_helper.user.js`](douyin_helper.user.js).
-3. Open Douyin.com, scroll, and watch the server console automatically catch videos!
+1. 在浏览器安装 [Tampermonkey (油猴)](https://www.tampermonkey.net/) 插件。
+2. 创建新脚本，将 [`douyin_helper.user.js`](douyin_helper.user.js) 的内容复制进去并保存。
+3. 打开 [Douyin.com](https://www.douyin.com/)，你会看到右侧出现悬浮面板。
+4. **开始刷视频**：脚本会自动捕获你看到的视频并发送给后台下载！
 
-### Mode B: Auto Spider (Fully Automated)
-*Best for: Archiving profiles or bulk downloading feeds.*
+### 模式 B：全自动爬虫（批量归档）
+*适用场景：无需打开浏览器，批量下载某个博主的全部作品，或者挂机下载推荐流。*
 
-1. **Cookie Setup** (Crucial):
-   - Install **EditThisCookie** extension.
-   - Login to Douyin -> Export Cookies -> Paste into `cookies.txt`.
-2. **Run Spider**:
+1. **设置 Cookie** (只需一次)：
+   - 在浏览器安装 **EditThisCookie** 插件。
+   - 登录抖音网页版 -> 点击插件图标 -> **导出** (箭头图标)。
+   - 在项目根目录下新建 `cookies.txt`，将内容粘贴进去并保存。
+2. **运行爬虫**：
    ```bash
-   # Download Recommendation Feed
+   # 下载推荐流（无尽模式）
    python spider.py
 
-   # Download Specific User
+   # 下载指定博主的全部作品
    python spider.py "https://www.douyin.com/user/MS4wLjABAAAA..."
    ```
 
 ---
 
-## 🤝 Contribution
+## 🤝 参与贡献
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+欢迎任何形式的贡献！无论是提交 Bug 反馈、功能建议，还是直接提交 PR，都非常感谢。
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Fork 本项目
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的改动 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 提交 Pull Request
 
-## 📝 License
+## 📝 开源协议
 
-Distributed under the MIT License. See `LICENSE` for more information.
+本项目基于 [MIT License](LICENSE) 开源。

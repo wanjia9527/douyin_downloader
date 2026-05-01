@@ -1,40 +1,39 @@
-# 🎵 Douyin Downloader (Hybrid Edition)
+﻿# Douyin Batch Downloader
 
-[English Version](README_EN.md) | [中文说明](README.md)
+[中文说明](README.md) | [English Version](README_EN.md)
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/wanjia9527/douyin_downloader?style=for-the-badge)](https://github.com/wanjia9527/douyin_downloader/stargazers)
+[[Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[[License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)](LICENSE)
+[[GitHub stars](https://img.shields.io/github/stars/wanjia9527/douyin_downloader?style=for-the-badge)](https://github.com/wanjia9527/douyin_downloader/stargazers)
 
-> **A powerful, dual-mode solution for downloading high-quality videos from Douyin (TikTok China).**  
-> Whether you want to browse and pick videos manually, or scrape a creator's entire profile automatically, this tool has you covered.
+> **An efficient, dual‑mode high‑quality Douyin video downloader.**  
+> Whether you want to download as you scroll (manual mode) or batch‑archive all videos from a creator (automatic mode), this tool fits your needs.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-- **🚀 High Performance**: Built with `requests` connection pooling and multi-threaded downloading (16-32 threads).
-- **🛡️ Smart & Safe**: Automatically handles cookies via `cookies.txt` (Netscape format) to bypass login restrictions safely.
-- **📂 Auto-Organization**: 
-  - Feed videos -> `Save_Dir/Douyin_Feed/`
-  - Profile videos -> `Save_Dir/Author_Name/`
-- **🎮 Dual Modes**: 
-  - **Browser Assistant**: Use a UserScript button while browsing.
-  - **Auto Spider**: Fully automated headless scraper using Playwright.
+- **🚀 Blazing Fast** – Powered by `requests` connection pooling and multithreading (supports 16‑32 concurrent threads).
+- **🛡️ Anti‑block Bypass** – Load local cookies (`cookies.txt`, Netscape format) to easily bypass login restrictions.
+- **📁 Auto‑organize**:
+  - Recommended feed → `SAVE_DIR/Douyin_Feed/`
+  - User homepage → `SAVE_DIR/author_nickname/`
+- **🎭 Dual Modes**:
+  - **Browser assistant mode** – With a Tampermonkey script, auto‑capture videos while browsing.
+  - **Fully automatic crawler mode** – Background scrolling and fetching.
 
 ---
 
 ## 📈 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=wanjia9527/douyin_downloader&type=Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)
+[[Star History Chart](https://api.star-history.com/svg?repos=wanjia9527/douyin_downloader&type=Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)
 
 ---
 
 ## 🛠️ Quick Start
 
-### 1. Installation
+### 1. Install
 
-Clone the repo and install dependencies:
 ```bash
 git clone https://github.com/wanjia9527/douyin_downloader.git
 cd douyin_downloader
@@ -42,15 +41,15 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 2. Configuration
+### 2. Set Save Directory
 
-Open `main.py` and set your preferred storage path:
+Open `config.py` and change `SAVE_DIR` (e.g.):
 ```python
-SAVE_DIR = r"F:\Douyin_Videos"  # <--- Change this to your path
+SAVE_DIR = r"F:\Douyin_Videos"
 ```
 
-### 3. Run the Core Server
-**Always keep this running!** It acts as the download manager.
+### 3. Start Core Service
+**Important: this service must be running for any mode to work.**
 ```bash
 python main.py
 ```
@@ -59,44 +58,59 @@ python main.py
 
 ## 📖 Usage Guide
 
-### Mode A: Browser Assistant (Manual)
-*Best for: Casual browsing and selective downloading.*
+### Mode A: Browser Assistant (Manual / Semi‑auto)
+*Use when scrolling Douyin and you only want to download some videos.*
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) extension.
-2. Create a new script and copy the content from [`douyin_helper.user.js`](douyin_helper.user.js).
-3. Open Douyin.com, scroll, and watch the server console automatically catch videos!
+1. Install [Tampermonkey](https://www.tampermonkey.net/) in your browser.
+2. Create a new script, paste the content of [`douyin_helper.user.js`](douyin_helper.user.js), and save.
+3. Open [Douyin.com](https://www.douyin.com/). A floating panel will appear on the right.
+4. **Start scrolling** – the script captures videos and sends them to the background downloader.
 
-### Mode B: Auto Spider (Fully Automated)
-*Best for: Archiving profiles or bulk downloading feeds.*
+### Mode B: Fully Automatic Crawler (Batch Archive)
+*Use to download all works from a creator without opening the browser, or to keep downloading the recommended feed.*
 
-1. **Cookie Setup** (Crucial):
-   - Install **EditThisCookie** extension.
-   - Login to Douyin -> Export Cookies -> Paste into `cookies.txt`.
-2. **Run Spider**:
+1. **Set up cookies (once)**:
+   - Install the **EditThisCookie** browser extension.
+   - Log in to Douyin web, click the extension icon, and **export** cookies.
+   - Create a `cookies.txt` file in the project root and paste the exported content.
+2. **Run the crawler**:
    ```bash
-   # Download Recommendation Feed
+   # Download recommended feed (infinite mode)
    python spider.py
 
-   # Download Specific User
+   # Download all videos from a specific user
    python spider.py "https://www.douyin.com/user/MS4wLjABAAAA..."
    ```
 
-> **💡 Tip**: 
-> 1. Edit `SCROLL_INTERVAL = 2` in `spider.py` to adjust scrolling speed.
-> 2. Default URL is now locked to Recommendation Feed (`/?recommend=1`).
+> **💡 Tips**:
+> 1. Open `spider.py` and adjust `SCROLL_INTERVAL = 2` (seconds) to change scrolling speed.
+> 2. The default URL is locked to the recommended feed (`/?recommend=1`) to prevent drift.
 
 ---
 
-## 🤝 Contribution
+## ⚙️ Configuration
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Modify `config.py` or `config.yaml` to change downloader behavior.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+- `SAVE_DIR` – Root folder for saved videos.
+- `THREAD_COUNT` – Number of download threads (default 16).
+- `MAX_RETRIES` – Retry attempts when download fails.
+- `COOKIE_PATH` – Path to cookie file (default `cookies.txt` in project root).
+
+---
+
+## 🤝 Contributing
+
+Any form of contribution – bug reports, feature suggestions, or pull requests – is very welcome.
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+---
 
 ## 📝 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the [MIT License](LICENSE).

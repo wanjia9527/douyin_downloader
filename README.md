@@ -26,7 +26,7 @@
 
 ## 📈 Star 趋势
 
-[[Star History Chart](https://api.star-history.com/svg?repos=wanjia9527/douyin_downloader&type=Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)
+[![![Star History Chart](https://api.star-history.com/svg?repos=wanjia9527/douyin_downloader&type=Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)](https://star-history.com/#wanjia9527/douyin_downloader&Date)
 
 ---
 
